@@ -1,0 +1,4 @@
+.venv
+.git
+python -m venv .venv
+.DS_Store
