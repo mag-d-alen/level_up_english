@@ -1,0 +1,12 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %} It's Question Time! let's get silky! {% endblock %}
+
+{% block content %}
+<div class="form-check w-75">
+    {% for a in answers %}
+    <h6>{{a.pk}}. <a href="{% url 'test-detail' q.pk %}">{{a.answer}}</a>{a.is_correct}</h6>
+    {% endfor%}
+</div>
+{% endblock content %}
