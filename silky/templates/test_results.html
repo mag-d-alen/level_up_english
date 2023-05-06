@@ -5,8 +5,17 @@
 
 {% block content %}
 <div class="form-check w-75">
-    {% for a in answers %}
-    <h6>{{a.pk}}. <a href="{% url 'test-detail' q.pk %}">{{a.answer}}</a>{a.is_correct}</h6>
+    <p>Results</p>
+    {% for r in results %}
+    <h6>{{r.question}}</h6>
+    <ol>
+        <li>{{r.1}}</li>
+        <li>{{r.2}}</li>
+        <li>{{r.3}}</li>
+        <li>{{r.4}}</li>
+    </ol>
+  <p> you answered: {{r.response}}</p>
+    <p>correct answer: {{r.correct}}</p>
     {% endfor%}
 </div>
 {% endblock content %}

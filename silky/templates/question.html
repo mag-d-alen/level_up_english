@@ -1,0 +1,40 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %} It's Question Time! let's get silky! {% endblock %}
+
+{% block content %}
+
+    <h6>{{q.pk}}. {{q.question}}</h6>
+    <form method="POST" name=q.pk>
+        {% csrf_token %}
+            <div class="form-check d-flex flex-column align-items-left px-30">
+             <div class="form-check row">
+              <input class="form-check-input" type="radio" name=q.pk id=1 value="1" >
+              <label class="form-check-label " for=1>
+                  {{q.answer_1}}
+              </label>
+             </div>
+            <div class="form-check row">
+              <input class="form-check-input" type="radio" name=q.pk id=2 value="2">
+              <label class="form-check-label" for=2>
+                {{q.answer_2}}
+              </label>
+            </div>
+            <div class="form-check row">
+              <input class="form-check-input" type="radio" name=q.pk id=3 value="3">
+              <label class="form-check-label" for=3>
+                  {{q.answer_3}}
+              </label>
+            </div>
+            <div class="form-check row">
+              <input class="form-check-input" type="radio" name=q.pk id=4 value="4">
+              <label class="form-check-label" for=4>
+                  {{q.answer_4}}
+              </label>
+            </div>
+            </div>
+        <button class = "btn btn-light row" >submit</button>
+    </form>
+    <a href="{% url 'test' %}"><button class = "btn btn-light row" >go back</button></a>
+{% endblock content %}
