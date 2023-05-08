@@ -4,9 +4,12 @@
 {% block title %} It's Question Time! let's get silky! {% endblock %}
 
 {% block content %}
-
+<div class="container">
+     <div class="d-flex justify-content-center p-4 ">
+         <a href="{% url 'test' %}"><button class = "btn btn-light btn-large" >go back</button></a>
+    </div>
     <h6>{{q.pk}}. {{q.question}}</h6>
-    <form method="POST" name=q.pk>
+    <form class="p-4"method="POST" name=q.pk>
         {% csrf_token %}
             <div class="form-check d-flex flex-column align-items-left px-30">
              <div class="form-check row">
@@ -34,7 +37,9 @@
               </label>
             </div>
             </div>
-        <button class = "btn btn-light row" >submit</button>
+  <div class="d-flex justify-content-center ">
+        <button class = "btn btn-light btn-large" >submit</button>
+  </div>
     </form>
-    <a href="{% url 'test' %}"><button class = "btn btn-light row" >go back</button></a>
+    </div>
 {% endblock content %}

@@ -4,18 +4,28 @@
 {% block title %} It's Question Time! let's get silky! {% endblock %}
 
 {% block content %}
-<div class="form-check w-75">
-    <p>Results</p>
+<div class="form-check w-75"> <div class="d-flex justify-content-center mb-4 ">
+         <a href="{% url 'test' %}"><button class = "btn btn-light btn-large" >go back</button></a>
+    </div>
+    <div class="h2">Answered Questions</div>
     {% for r in results %}
-    <h6>{{r.question}}</h6>
-    <ol>
-        <li>{{r.1}}</li>
-        <li>{{r.2}}</li>
-        <li>{{r.3}}</li>
-        <li>{{r.4}}</li>
-    </ol>
-  <p> you answered: {{r.response}}</p>
-    <p>correct answer: {{r.correct}}</p>
+        <div class="card m-4 p-4" style ="border-bottom: 3px solid {% if r.is_right %} #00800052 {% else %}#ff00002e{% endif %}" >
+         <div class ="card-title">{{r.question}}</div>
+            <ol>
+                <li>{{r.1}}</li>
+                <li>{{r.2}}</li>
+                <li>{{r.3}}</li>
+                <li>{{r.4}}</li>
+            </ol>
+            <p> you answered: {{r.response}}</p>
+            {% if r.is_right %}
+            <h2 style="color: green">Correct!<h2>
+                {% else %}
+            <h3 style="color: red">You got it wrong.. The correct answer is {{r.correct}}</h3>
+            {% endif %}
+
+        </div>
     {% endfor%}
+    </div>
 </div>
 {% endblock content %}

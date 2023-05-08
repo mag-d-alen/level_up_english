@@ -5,12 +5,13 @@
 
 {% block content %}
     {% if questions %}
-        <h2>Choose which question you'd like to tackle</h2>
+<div class="container">
+        <p class="h2">Choose which question you'd like to tackle</p>
         {% for q in questions %}
-             <h6>{{q.pk}}. <a href="{% url 'answers' q.pk %}">{{ q.question }}</a></h6>
+             <p>{{q.pk}}. <a href="{% url 'answers' q.pk %}">{{ q.question }}</a></p>
         {% endfor %}
     {% else %}
-        <h6> You have answered all available questions. <a href="{% url 'results'%}">See your results.</a></h6>
+        <p class="h2"> You have answered all available questions. <a href="{% url 'results'%}">See your results.</a></p>
     {% endif %}
 </div>
 {% endblock content %}
