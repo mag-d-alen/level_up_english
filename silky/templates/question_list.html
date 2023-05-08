@@ -1,0 +1,17 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %} It's Question Time! let's get silky! {% endblock %}
+
+{% block content %}
+    {% if questions %}
+<div class="container">
+        <p class="h2">Choose which question you'd like to tackle</p>
+        {% for q in questions %}
+             <p>{{q.pk}}. <a href="{% url 'answers' q.pk %}">{{ q.question }}</a></p>
+        {% endfor %}
+    {% else %}
+        <p class="h2"> You have answered all available questions. <a href="{% url 'results'%}">See your results.</a></p>
+    {% endif %}
+</div>
+{% endblock content %}
