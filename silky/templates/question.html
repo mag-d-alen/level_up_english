@@ -6,7 +6,7 @@
 {% block content %}
 <div class="container">
      <div class="d-flex justify-content-center p-4 ">
-         <a href="{% url 'test' %}"><button class = "btn btn-light btn-large" >go back</button></a>
+         <a href="{% url 'test' %}"><button class = "btn btn-light btn-large mb-4" >Back to All Questions</button></a>
     </div>
     <h6>{{q.pk}}. {{q.question}}</h6>
     <form class="p-4"method="POST" name=q.pk>
