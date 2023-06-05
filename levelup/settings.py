@@ -35,12 +35,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # local apps
+    'accounts.apps.AccountsConfig',
+    'silky.apps.LevelUpPracticeConfig',
     # third party apps
     "crispy_forms",
     "crispy_bootstrap5",
-    # local apps
-    'accounts.apps.AccountsConfig',
-    'silky.apps.LevelUpPracticeConfig'
+]
+INSTALLED_APPS += [
+    'widget_tweaks',
 ]
 AUTH_USER_MODEL = "accounts.CustomUser"
 MIDDLEWARE = [

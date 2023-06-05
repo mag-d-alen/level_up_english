@@ -4,14 +4,29 @@
 {% block title %} It's Question Time! let's get silky! {% endblock %}
 
 {% block content %}
-    {% if questions %}
-<div class="container">
-        <p class="h2">Choose which question you'd like to tackle</p>
-        {% for q in questions %}
-             <p>{{q.pk}}. <a href="{% url 'answers' q.pk %}">{{ q.question }}</a></p>
-        {% endfor %}
+<div class="container" >
+    {% if user.is_staff %}
+        {% if questions %}
+            <div id="edit_form">
+                <p class="h2 mb-4">Click to edit a question</p>
+            {% for q in questions %}
+                <div  hx-get='/edit/{{q.pk}}' hx-target='#edit_form' hx-trigger="click">{{q.pk}}.{{ q.question }}
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p class="h2"> There is no questions. <a href="{% url 'add' %}">Create new ones.</a></p>
+        {% endif %}
     {% else %}
-        <p class="h2"> You have answered all available questions. <a href="{% url 'results'%}">See your results.</a></p>
+        {% if questions %}
+        <p class="h2 mb-4">Choose which question you'd like to tackle</p>
+            {% for q in questions %}
+                 <p>{{q.pk}}. <a href="{% url 'answers' q.pk %}">{{ q.question }}</a></p>
+            {% endfor %}
+        {% else %}
+            <p class="h2"> You have answered all available questions. <a href="{% url 'results'%}">See your results.</a></p>
+        {% endif %}
     {% endif %}
 </div>
+
 {% endblock content %}

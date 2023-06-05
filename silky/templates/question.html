@@ -8,7 +8,52 @@
      <div class="d-flex justify-content-center p-4 ">
          <a href="{% url 'test' %}"><button class = "btn btn-light btn-large mb-4" >Back to All Questions</button></a>
     </div>
+    {% if user.is_staff%}
+    <div class="p-4">
+        <p id="question"  hx-trigger="click"  hx-target="this" hx-swap="outerHTML">{{q.question}}</p>
+        <ol>
+            <li class="editable">{{q.answer_1}}</li>
+            <li class="editable">{{q.answer_2}}</li>
+            <li class="editable">{{q.answer_3}}</li>
+            <li class="editable">{{q.answer_4}}</li>
+        </ol>
+        <p class="editable">correct answer: {{q.correct_answer}}</p>
+<!--           <div class="d-flex justify-content-center ">-->
+<!--                <button class="btn btn-danger" hx-get="edit">Click to edit</button>-->
+<!--            </div>-->
+    </form>
+    </div>
+    <form hx-put="/edit/{{q.pk}}/" hx-target="this" hx-headers="{'X-CSRFToken': '{{ csrf_token }}'}">
+            <div class="form-check d-flex flex-column align-items-left px-30">
+                <div class="form-check row">
+                    <label class="form-check-label " for=q0> Question :</label>
+                    <input type="text" name=q.pk id=q0 value={{q.question}} >
+                </div>
+                 <div class="form-check row">
+                   <label class="form-check-label " for=q1> answer 1 :</label>
+                    <input type="text" name=q.pk id=q1 value={{q.answer_1}} >
+                 </div>
+                <div class="form-check row">
+                    <label class="form-check-label " for=q2> answer 2 :</label>
+                    <input type="text" name=q.pk id=q2 value={{q.answer_2}} >
+                </div>
+                <div class="form-check row">
+                    <label class="form-check-label " for=q3> answer 3 :</label>
+                    <input type="text" name=q.pk id=q3 value={{q.answer_3}} >
+                </div>
+                <div class="form-check row">
+                    <label class="form-check-label " for=q4> answer 4 :</label>
+                    <input type="text" name=q.pk id=q4 value={{q.answer_4}} >
+                </div>
+
+            <div class="d-flex justify-content-center ">
+                <button class="btn btn-danger">Save</button>
+            </div>
+    </form>
+
+    {% else %}
     <h6>{{q.pk}}. {{q.question}}</h6>
+
     <form class="p-4"method="POST" name=q.pk>
         {% csrf_token %}
             <div class="form-check d-flex flex-column align-items-left px-30">
@@ -37,9 +82,11 @@
               </label>
             </div>
             </div>
-  <div class="d-flex justify-content-center ">
-        <button class = "btn btn-light btn-large" >submit</button>
-  </div>
+          <div class="d-flex justify-content-center ">
+                <button class = "btn btn-light btn-large" >submit</button>
+          </div>
     </form>
+    {% endif %}
     </div>
+
 {% endblock content %}
