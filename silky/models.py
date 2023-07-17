@@ -14,6 +14,9 @@ class TestQuestion(models.Model):
     answer_4 = models.CharField(max_length=300)
     correct_answer = models.CharField(max_length=1)
 
+    def get_answers(self):
+        return [self.answer_1, self.answer_2,self.answer_3, self.answer_4]
+
     def __str__(self):
         return f"{self.question} {self.correct_answer}"
 

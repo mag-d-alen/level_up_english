@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -31,7 +32,7 @@ class TestQuestionListView(ListView):
     context_object_name = "questions"
 
     def get_queryset(self):
-        qs = TestQuestion.objects.exclude(answers__author=self.request.user)
+        qs = TestQuestion.objects.exclude(answers__author=self.request.user).order_by('id')
         return qs
 
 
@@ -45,16 +46,19 @@ def add_question_view(request):
     else:
         return render(request, 'partials/question_form.html', {'form': form})
 
-@require_http_methods(['GET', 'POST'])
+
 def edit_question_view(request, pk):
-    question = TestQuestion.objects.get(pk=pk)
+    if request.method == 'GET':
+        question = TestQuestion.objects.get(pk=pk)
+        print(question.correct_answer)
+        context = {'q': question, "answers":question.get_answers()}
     if request.method == 'POST':
-        data = {key:value for (key, value) in request.POST.items()}
-        TestQuestion.objects.filter(id = pk).update(**data)
-        message =' <p>Congratulations, the question was updated successfully</p>'
+        data = {key: value for (key, value) in request.POST.items()}
+        print(data)
+        TestQuestion.objects.filter(id=pk).update(**data)
+        message = ' <p>Congratulations, the question was updated successfully</p>'
         return HttpResponse(message, status=200)
-    else:
-        return render(request, 'partials/edit_question.html', {'q': question})
+    return render(request, 'partials/edit_question.html', context=context)
 
 
 def question_detail_view(request, pk):
@@ -64,15 +68,18 @@ def question_detail_view(request, pk):
         data = {"answer": answer, "test_question": question, "author": request.user}
         new_answer = TestAnswer.objects.create(**data)
         new_answer.save()
+
         return redirect('results')
-    else:
-        return render(request, 'question.html', {'q': question})
+    return render(request, 'question.html', {'q': question})
 
 
 def user_results_view(request):
     questions = list(TestQuestion.objects.filter(answers__author=request.user).order_by("-answers__id"))
-    results = [{"question": q.question, "correct": q.correct_answer, "1": q.answer_1, "2": q.answer_2, "3": q.answer_3,
-                "4": q.answer_4, "response": TestAnswer.objects.filter(author=request.user, test_question=q)
-        .values().first()["answer"], "is_right": TestAnswer.objects.filter(author=request.user, test_question=q)
-                                                 .values().first()["answer"] == q.correct_answer} for q in questions]
+    results = [{"question": q.question,
+                "correct": q.correct_answer,
+                "answers": [q.answer_1, q.answer_2, q.answer_3, q.answer_4],
+                "response": TestAnswer.objects.filter(author=request.user, test_question=q)
+                .values().first()["answer"], "is_right": TestAnswer.objects.filter(author=request.user, test_question=q)
+                                                         .values().first()["answer"] == q.correct_answer} for q in
+               questions]
     return render(request, 'test_results.html', {'results': results})

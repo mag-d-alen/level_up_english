@@ -10,7 +10,7 @@
             <div id="edit_form">
                 <p class="h2 mb-4">Click to edit a question</p>
             {% for q in questions %}
-                <div  hx-get='/edit/{{q.pk}}' hx-target='#edit_form' hx-trigger="click">{{q.pk}}.{{ q.question }}
+                <div   hx-get='/edit/{{q.pk}}' hx-target='#edit_form' hx-trigger="click" class="py-2">{{q.pk}}. {{ q.question }}
                 </div>
             {% endfor %}
             </div>
